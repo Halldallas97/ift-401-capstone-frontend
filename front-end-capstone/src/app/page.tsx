@@ -5,9 +5,12 @@ import { TypeAnimation } from "react-type-animation";
 export default function Home() {
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isNewUserPopupOpen, setIsnewUserPopupOpen] = useState<boolean>(false);
-  const [isCurrentUserPopupOpen, setIsCurrentUserPopupOpen] = useState<boolean>(false);
+  const [isCurrentUserPopupOpen, setIsCurrentUserPopupOpen] =
+    useState<boolean>(false);
   const [email, setE] = useState<string>("");
   const [pWord, setP] = useState<string>("");
+  const [lName, setlName] = useState<string>("");
+  const [fName, setfName] = useState<string>("");
 
   function setNewUser() {
     setIsnewUserPopupOpen(true);
@@ -61,7 +64,9 @@ export default function Home() {
                   onClick={closePopup}
                 ></div>
                 <div className="relative mx-auto rounded-md bg-transparent max-w-md z-50 p-6">
-                  <div className="flex text-2xl text-center p-2">User Details</div>
+                  <div className="flex text-2xl text-center p-2">
+                    User Details
+                  </div>
                   <div>
                     <form className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md">
                       <div className="mb-6">
@@ -97,7 +102,6 @@ export default function Home() {
                           placeholder="Enter your password"
                         />
                       </div>
-
                       <div className="flex justify-between mt-6">
                         <button
                           className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition"
@@ -126,7 +130,9 @@ export default function Home() {
                   onClick={closePopup}
                 ></div>
                 <div className="relative mx-auto rounded-md bg-transparent max-w-md z-50 p-6">
-                  <div className="flex text-2xl text-center p-2">User Details</div>
+                  <div className="flex text-2xl text-center p-2">
+                    User Details
+                  </div>
                   <div>
                     <form className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md">
                       <div className="mb-6">
@@ -156,7 +162,7 @@ export default function Home() {
                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         id="fName"
                         name="fName"
-                        onChange={(e) => setP(e.target.value)}
+                        onChange={(e) => setfName(e.target.value)}
                         placeholder="First name "
                       />
                       <label
@@ -170,7 +176,7 @@ export default function Home() {
                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         id="lName"
                         name="lName"
-                        onChange={(e) => setP(e.target.value)}
+                        onChange={(e) => setlName(e.target.value)}
                         placeholder="Last Name"
                       />
 

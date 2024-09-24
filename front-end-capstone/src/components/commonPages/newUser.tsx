@@ -3,11 +3,18 @@ import { createUser } from "../helpers/UserHelper";
 import { useAuth } from "../auth/authContext";
 import router from "next/router";
 
+interface User{
+    firstName: string; 
+    lastName: string; 
+    userName: string; 
+}
+
 export function NewUser() {
     const [email, setE] = useState<string>("");
     const [pWord, setP] = useState<string>("");
     const [lName, setlName] = useState<string>("");
     const [fName, setfName] = useState<string>("");
+    const [userName, setUserName] = useState<string>("");
     const [completed, setIsComplete] = useState<boolean>(false);
     const { login } = useAuth();
 
@@ -17,11 +24,16 @@ export function NewUser() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-
+        const user: User = {
+            firstName: fName,
+            lastName: lName,
+            userName: userName,
+        };
         try {
-            await createUser(email, fName, lName, pWord);
-            login("some-auth-token");
-            window.location.reload(); 
+            await createUser(email, userName, fName, lName, pWord);
+            
+            login("some-auth-token" , user);
+            window.location.reload();
         } catch (error) {
             console.error("Error creating user:", error);
         }
@@ -60,35 +72,54 @@ export function NewUser() {
                                         placeholder="Enter your email"
                                     />
                                 </div>
-                                <label
-                                    htmlFor="firstname"
-                                    className="block text-lg font-roboto font-semibold text-gray-700 mb-2"
-                                >
-                                    First Name:
-                                </label>
-                                <input
-                                    type="text"
-                                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    id="fName"
-                                    name="fName"
-                                    onChange={(e) => setfName(e.target.value)}
-                                    placeholder="First name"
-                                />
-                                <label
-                                    htmlFor="lastname"
-                                    className="block text-lg font-roboto font-semibold text-gray-700 mb-2"
-                                >
-                                    Last Name:
-                                </label>
-                                <input
-                                    type="text"
-                                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    id="lName"
-                                    name="lName"
-                                    onChange={(e) => setlName(e.target.value)}
-                                    placeholder="Last Name"
-                                />
-
+                                <div className="mb-6">
+                                    <label
+                                        htmlFor="userName"
+                                        className="block text-lg font-roboto font-semibold text-gray-700 mb-2"
+                                    >
+                                        Username:
+                                    </label>
+                                    <input
+                                        type="userName"
+                                        className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        id="userName"
+                                        name="userName"
+                                        onChange={(e) => setUserName(e.target.value)}
+                                        placeholder="Enter your username"
+                                    />
+                                </div>
+                                <div className="mb-6">
+                                    <label
+                                        htmlFor="firstname"
+                                        className="block text-lg font-roboto font-semibold text-gray-700 mb-2"
+                                    >
+                                        First Name:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        id="fName"
+                                        name="fName"
+                                        onChange={(e) => setfName(e.target.value)}
+                                        placeholder="First name"
+                                    />
+                                </div>
+                                <div className="mb-6">
+                                    <label
+                                        htmlFor="lastname"
+                                        className="block text-lg font-roboto font-semibold text-gray-700 mb-2"
+                                    >
+                                        Last name:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        id="lName"
+                                        name="lName"
+                                        onChange={(e) => setlName(e.target.value)}
+                                        placeholder="Last name"
+                                    />
+                                </div>
                                 <div className="mb-6">
                                     <label
                                         htmlFor="password"

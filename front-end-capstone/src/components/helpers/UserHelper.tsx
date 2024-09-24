@@ -1,7 +1,22 @@
 "use client";
 
-export function createUser(email: string, firstName: string, lastName: string, password: string) {
+const path = "http://localhost:8080/api/server/trader"
+
+
+export function createUser(email: string, userName: string, firstName: string, lastName: string, password: string) {
     console.log(`Creating user with email: ${email}, password: ${password}, first name: ${firstName}, last name: ${lastName}`);
+    try{
+        const response = fetch(path, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, userName, firstName, lastName, password }),
+        }); 
+    }
+    catch (err) {
+        console.error(`There was an error creating trader: ${err}`);
+    }
+    
+
     // make API call to create the user
     // Simulating successful user creation
 }

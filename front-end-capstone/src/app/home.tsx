@@ -13,7 +13,7 @@ export default function Home() {
     const [isComplete, setIsComplete] = useState<boolean>(false);
     const [isNewUserPopupOpen, setIsnewUserPopupOpen] = useState<boolean>(false);
     const [isCurrentUserPopupOpen, setIsCurrentUserPopupOpen] = useState<boolean>(false);
-    const { logout, user} = useAuth();
+    const { user } = useAuth();
 
     function setNewUser() {
         setIsnewUserPopupOpen(true);
@@ -23,48 +23,41 @@ export default function Home() {
         setIsCurrentUserPopupOpen(true);
     }
 
-    function logoutUser() {
-        try {
-            logout();
-            window.location.reload();
-        } catch (error) {
-            console.error("Error creating user:", error);
-        }
-    }
-
     return (
-        <div className="flex justify-center items-center min-h-screen">
-            <div className="text-center">
-                <IsAuthorized>
-                <TypeAnimation
-                    className="text-white text-4xl font-roboto italic bold"
-                    sequence={[
-                        `Welcome to StonkTrader.io ${user?.firstName},` ,
-                        500,
-                        `Welcome to StonkTrader.io ${user?.firstName}, where you buy at the dip and sell at the peak.`,
-                        () => {
-                            setIsComplete(true);
-                        },
-                    ]}
-                />
-                    <div className="flex justify-center">
-                        <button className="bg-black text-white text-lg hover:bg-gray-800 rounded-md p-1 m-2" onClick={logoutUser}> logout </button>
-                    </div>
-                </IsAuthorized>
-                <IsNotAuthorized>
-                <TypeAnimation
-                    className="text-white text-4xl font-roboto italic bold"
-                    sequence={[
-                        "Welcome to StonkTrader.io ",
-                        500,
-                        "Welcome to StonkTrader.io where you buy at the dip and sell at the peak.",
-                        () => {
-                            setIsComplete(true);
-                        },
-                    ]}
-                />
+        <div className="text-center">
+            <IsAuthorized>
+                <div className="p-4">
+
+                    <TypeAnimation
+                        className="text-white text-4xl font-roboto italic bold"
+                        sequence={[
+                            `Welcome to StonkTrader.io ${user?.firstName},`,
+                            500,
+                            `Welcome to StonkTrader.io ${user?.firstName}, where you buy at the dip and sell at the peak.`,
+                            () => {
+                                setIsComplete(true);
+                            },
+                        ]}
+                    />
+                </div>
+
+
+            </IsAuthorized>
+            <IsNotAuthorized>
+                <div className="flex flex-col justify-center items-center min-h-screen">
+                    <TypeAnimation
+                        className="text-white text-4xl font-roboto italic bold"
+                        sequence={[
+                            "Welcome to StonkTrader.io ",
+                            500,
+                            "Welcome to StonkTrader.io where you buy at the dip and sell at the peak.",
+                            () => {
+                                setIsComplete(true);
+                            },
+                        ]}
+                    />
                     {isComplete && (
-                        <div>
+                        <div className="flex flex-row row-span-2 mt-4">
                             <button
                                 className="bg-black text-white text-lg hover:bg-gray-800 rounded-md p-1 m-2"
                                 onClick={setCurrentUser}
@@ -85,8 +78,8 @@ export default function Home() {
                             )}
                         </div>
                     )}
-                </IsNotAuthorized>
-            </div>
+                </div>
+            </IsNotAuthorized>
         </div>
     );
 }

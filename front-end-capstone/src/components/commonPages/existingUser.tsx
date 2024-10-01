@@ -2,7 +2,14 @@
 import { useState } from "react";
 import { checkuser } from "../helpers/UserHelper";
 import { useAuth } from "../auth/authContext";
-import router from "next/router";
+
+interface User {
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    wallet: number; 
+}
 
 export function ExistingUser() {
     const [email, setE] = useState<string>("");
@@ -10,22 +17,26 @@ export function ExistingUser() {
     const [completed, setIsComplete] = useState<boolean>(false);
     const { login } = useAuth();
 
-
-
-
     function closePopup() {
         setIsComplete(true);
     }
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        
         try {
-            await checkuser(email, pWord);
-            login("some-auth-token"); 
-            window.location.reload(); 
+            const user = await checkuser(email, pWord);
+
+            const useraccount: User = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                userName: user.userName,
+                email: user.email,
+                wallet: user.wallet,
+            };
+            login("some-auth-token", useraccount); 
+            window.location.reload();
         } catch (error) {
-            console.error("Error creating user:", error);
+            console.error("Error checking user:", error);
         }
     }
 

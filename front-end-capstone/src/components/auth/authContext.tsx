@@ -1,9 +1,12 @@
+"use client"
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 interface User{
     firstName: string; 
     lastName: string; 
-    userName: string; 
+    userName: string;
+    email: string;
+    wallet: number | null; 
 }
 
 interface AuthContextType {

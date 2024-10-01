@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { createUser } from "../helpers/UserHelper";
 import { useAuth } from "../auth/authContext";
-import router from "next/router";
 
 interface User{
     firstName: string; 
     lastName: string; 
     userName: string; 
+    email: string; 
+    wallet: number | null; 
 }
 
 export function NewUser() {
@@ -28,10 +29,12 @@ export function NewUser() {
             firstName: fName,
             lastName: lName,
             userName: userName,
+            email: email,
+            wallet: 0, 
+
         };
         try {
             await createUser(email, userName, fName, lName, pWord);
-            
             login("some-auth-token" , user);
             window.location.reload();
         } catch (error) {

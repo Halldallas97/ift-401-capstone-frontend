@@ -6,6 +6,7 @@ import { NewUser } from "../components/commonPages/newUser"
 import { ExistingUser } from "../components/commonPages/existingUser"
 import { IsAuthorized } from "@/components/auth/IsAuthorized";
 import { IsNotAuthorized } from "@/components/auth/IsNotAuthorized";
+import Ticker from "./ticker";
 
 
 export default function Home() {
@@ -39,6 +40,9 @@ export default function Home() {
                             },
                         ]}
                     />
+                    {isComplete && (
+                            <Ticker/>
+                        )}
                 </div>
 
 

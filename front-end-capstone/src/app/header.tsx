@@ -29,8 +29,7 @@ export default function Header() {
                         <Link href="/useraccount">Dashboard</Link>
                     </div>
                     <div className="flex items-center hover:text-gray-400">
-                        Wallet ${user?.wallet}
-
+                        <Link href="/wallet">Wallet ${user?.wallet}</Link>
                     </div>
                 </IsAuthorized>
 

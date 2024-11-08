@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createUser } from "../helpers/UserHelper";
+import { createUser } from "../helpers/RestHelper";
 import { useAuth } from "../auth/authContext";
 
 interface User{

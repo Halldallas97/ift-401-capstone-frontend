@@ -23,7 +23,7 @@ export default function Ticker() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer fTCtsri6rFjgXsCpplFtU92SXzZlSgAb`,
+            Authorization: `Bearer 0e7hWppHXfdD0zxhLTAJ45Uy_fpVeX1_`,
           },
         }
       );
@@ -53,12 +53,12 @@ export default function Ticker() {
     for (const sym of tickers) {
       try {
         const response = await fetch(
-          `https://api.polygon.io/v2/aggs/ticker/${sym.ticker}/range/1/day/${isoYesterday}/${isoToday}?adjusted=true&sort=asc&apiKey=fTCtsri6rFjgXsCpplFtU92SXzZlSgAb`,
+          `https://api.polygon.io/v2/aggs/ticker/${sym.ticker}/range/1/day/2023-01-09/2023-02-10?adjusted=true&sort=asc&apiKey=0e7hWppHXfdD0zxhLTAJ45Uy_fpVeX1_`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer fTCtsri6rFjgXsCpplFtU92SXzZlSgAb`,
+              Authorization: `Bearer 0e7hWppHXfdD0zxhLTAJ45Uy_fpVeX1_`,
             },
           }
         );

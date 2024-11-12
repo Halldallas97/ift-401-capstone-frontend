@@ -1,5 +1,6 @@
 "use client"
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { getWalletBalance } from "../services/userService"; // Import your function
 
 interface User{
     firstName: string; 
@@ -26,13 +27,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const authToken = localStorage.getItem("authToken");
         const storedUser = localStorage.getItem("user");
-
+    
         if (authToken && storedUser) {
-            setIsAuthenticated(true);
-            setUser(JSON.parse(storedUser));
+          setIsAuthenticated(true);
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+    
+          (async () => {
+            try {
+              const data = await getWalletBalance(parsedUser.email);
+              const updatedWallet = data;
+              setUser((prevUser) =>
+                prevUser ? { ...prevUser, wallet: updatedWallet } : prevUser
+              );
+            } catch (error) {
+              console.error("Error fetching wallet balance:", error);
+            }
+          })();
         }
         setLoading(false);
-    }, []);
+      }, []);
 
     const login = (token: string, user: User) => {
         localStorage.setItem("authToken", token);

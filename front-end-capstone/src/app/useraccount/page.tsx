@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
 import { useAuth } from "@/components/auth/authContext";
 import { IsAuthorized } from "@/components/auth/IsAuthorized";
 import { IsNotAuthorized } from "@/components/auth/IsNotAuthorized";
-import { getStock } from "../../components/services/stockService"
-
+import { getStock } from "../../components/services/stockService";
 import Home from "../home";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Stock {
     company: string;
@@ -17,43 +16,68 @@ interface Stock {
 }
 
 interface Stocks {
-    stocks: Stock[]; 
+    stocks: Stock[];
 }
 
 function App() {
     const { user } = useAuth();
-    const [isexpanded, setIsExpanded] = useState<boolean>();
-    const [response, setResponse] = useState<any>(null);
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const [stockList, setStockList] = useState<Stocks>({ stocks: [] });
-   
 
-
-    function expandButton() {
-        getStock(user?.email); 
-
-        setIsExpanded(true);
+    async function togglePortfolio() {
+        if (isExpanded) {
+            setIsExpanded(false);
+        } else {
+            var email;
+            try {
+                const response = await getStock(user?.email);
+                setStockList(response);
+                setIsExpanded(true);
+            } catch (error) {
+                console.error("Error fetching stocks:", error);
+            }
+        }
     }
 
     return (
-        <><IsAuthorized>
-            <div className="grid grid-cols-1 grid-rows-2 justify-center text-center p-4">
-                <div className="text-white text-2xl">User: {user?.userName}</div>
-                <div>
-                    <button className="text-white w-3/4 bg-transparent border p-2 rounded-md" onClick={expandButton}>
-                        Show Portfolio
+        <>
+            <IsAuthorized>
+                <div className="flex flex-col items-center  min-h-screen bg-transparent">
+                    <div className="text-white text-3xl  m-6">
+                        Welcome to your portfolio, {user?.userName}
+                    </div>
+                    <button
+                        className="bg-green-500 hover:bg-green-800 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300"
+                        onClick={togglePortfolio}
+                    >
+                        {isExpanded ? "Hide Portfolio" : "Show Portfolio"}
                     </button>
-                    {isexpanded && (
-                        <div className="text-white"> some portfolio data...</div>
+                    {isExpanded && (
+                        <div className="bg-purple-950 text-white mt-6 p-6 rounded-lg shadow-lg w-full max-w-md">
+                            <h2 className="text-xl font-semibold mb-4">Your Portfolio:</h2>
+                            <ul className="space-y-3">
+                                {stockList.stocks.map((stock, index) => (
+                                    <li
+                                        key={index}
+                                        className="bg-gray-700 p-3 rounded-md shadow-sm flex justify-between"
+                                    >
+                                        <span>
+                                            {stock.company} ({stock.sym})
+                                        </span>
+                                        <span>
+                                            ${stock.cost} x {stock.quantity}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     )}
                 </div>
-
-
-            </div>
-        </IsAuthorized>
+            </IsAuthorized>
             <IsNotAuthorized>
                 <Home />
             </IsNotAuthorized>
-
+            
         </>
     );
 }

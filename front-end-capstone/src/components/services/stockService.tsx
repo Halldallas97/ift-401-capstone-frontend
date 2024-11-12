@@ -11,6 +11,14 @@ interface StockBuy {
   email: string;
   newBalance: number;
 }
+interface Stock {
+  company: string;
+  sym: string;
+  cost: number;
+  quantity: number;
+  volume: number;
+}
+
 
 export function buyStock(quantity: number, name: string, costPerStock: number, total: number, symbol: string, email: string, newBalance: number) {
   console.log(`sending buy order ${quantity}, ${name}, ${costPerStock}, ${total}, ${symbol}, ${email}, ${newBalance}`)
@@ -36,21 +44,27 @@ export function buyStock(quantity: number, name: string, costPerStock: number, t
   }
 }
 
-export async function getStock(email: string) {
+export async function getStock(email: string): Promise<{ stocks: Stock[] }> {
   try {
-    console.log(email, "here")
+    console.log(email, "here");
+
     const response = await fetch(`${path}/stock?email=${email}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error("Network response was not ok");
     }
-    console.log(response);
-  }
-  catch (err) {
-    console.error(`There was an error buying the stock: ${err}`);
+
+    const data = await response.json();
+    console.log(data); 
+
+    return data; 
+  } catch (err) {
+    console.error(`There was an error fetching the stock: ${err}`);
+    return { stocks: [] }; 
   }
 }
+
 

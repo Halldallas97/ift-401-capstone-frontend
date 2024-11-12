@@ -16,6 +16,26 @@ export function createUser(email: string, userName: string, firstName: string, l
     }
 }
 
+export async function getWalletBalance(email: string){
+    try {
+        console.log(email, "here");
+    
+        const response = await fetch(`${path}/wallet?email=${email}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error("Network response failed");
+        }
+        const data = await response.json();    
+        return data; 
+      } catch (err) {
+        console.error(`There was an error fetching the wallet: ${err}`);
+        
+      }
+
+}
+
 export async function checkuser(email: string, pWord: string) {
     console.log(`user name: ${email}, password: ${pWord}`);
     try {

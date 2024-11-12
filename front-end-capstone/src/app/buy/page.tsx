@@ -37,7 +37,7 @@ export default function Buy() {
             const newBalance = user?.wallet - total;
             setErrorMessage(null); 
             try {
-                await buyStock(quantity, name, cost, total, symbol, user?.email, newBalance);
+                buyStock(quantity, name, cost, total, symbol, user?.email, newBalance);
                 router.push("/useraccount")
             } catch (error) {
                 setErrorMessage("An error occurred while making the purchase.");

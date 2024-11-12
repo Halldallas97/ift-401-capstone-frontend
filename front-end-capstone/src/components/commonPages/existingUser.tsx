@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { checkuser } from "../helpers/RestHelper";
+import { checkuser } from "../services/userService";
 import { useAuth } from "../auth/authContext";
 
 interface User {

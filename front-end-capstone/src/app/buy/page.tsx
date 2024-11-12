@@ -2,7 +2,7 @@
 import { useAuth } from "@/components/auth/authContext";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { buyStock } from "../../components/helpers/RestHelper";
+import { buyStock } from "../../components/services/stockService";
 import { IsAuthorized } from "@/components/auth/IsAuthorized";
 import { useRouter } from "next/navigation";
 

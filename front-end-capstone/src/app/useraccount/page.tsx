@@ -3,52 +3,36 @@
 import { useAuth } from "@/components/auth/authContext";
 import { IsAuthorized } from "@/components/auth/IsAuthorized";
 import { IsNotAuthorized } from "@/components/auth/IsNotAuthorized";
+import { getStock } from "../../components/services/stockService"
 
 import Home from "../home";
 import { useEffect, useState } from "react";
 
-const path = "http://localhost:8080/api/server"
+interface Stock {
+    company: string;
+    sym: string;
+    cost: number;
+    quantity: number;
+    volume: number;
+}
 
-// async function getPortfolio() {
-//     try {
-//         const data = await fetch(path, {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         });
-//         return await data.json()
-//     } catch (err) {
-//         console.error(`There was an error fetching data: ${err}`);
-//     }
-// }
+interface Stocks {
+    stocks: Stock[]; 
+}
 
 function App() {
     const { user } = useAuth();
     const [isexpanded, setIsExpanded] = useState<boolean>();
     const [response, setResponse] = useState<any>(null);
+    const [stockList, setStockList] = useState<Stocks>({ stocks: [] });
+   
 
 
     function expandButton() {
+        getStock(user?.email); 
+
         setIsExpanded(true);
     }
-
-    // async function fetchPortfolio() {
-    //     const responseData = await getPortfolio();
-    //     setResponse(responseData)
-    // }
-
-    // useEffect(() => {
-    //     fetchPortfolio()
-    // }, [])
-
-
-
-    // if (!response) return <div>Loading...</div>
-
-    // if (response.error) {
-    //     return <div>There was an error</div>
-    // }
 
     return (
         <><IsAuthorized>

@@ -44,12 +44,6 @@ export default function Ticker() {
   }, [tickers]);
 
   async function getStockData() {
-    const today = new Date();
-    const isoToday = today.toISOString().split('T')[0];
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const isoYesterday = yesterday.toISOString().split('T')[0];
-    
     for (const sym of tickers) {
       try {
         const response = await fetch(

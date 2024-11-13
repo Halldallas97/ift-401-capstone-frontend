@@ -19,6 +19,18 @@ interface Stock {
   volume: number;
 }
 
+export function updateWallet(quantity: number, email: string) {
+  try {
+    const response = fetch(`${path}/wallet?email=${email}&add=${quantity}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err) {
+    console.error(`There was an error buying the stock: ${err}`);
+  }
+}
+
+
 
 export function buyStock(quantity: number, name: string, costPerStock: number, total: number, symbol: string, email: string, newBalance: number) {
   console.log(`sending buy order ${quantity}, ${name}, ${costPerStock}, ${total}, ${symbol}, ${email}, ${newBalance}`)

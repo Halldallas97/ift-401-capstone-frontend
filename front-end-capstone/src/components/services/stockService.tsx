@@ -19,17 +19,18 @@ interface Stock {
   volume: number;
 }
 
-export function updateWallet(quantity: number, email: string) {
+export function updateWallet(quantity: number, email: string, withdrawl: boolean) {
   try {
-    const response = fetch(`${path}/wallet?email=${email}&add=${quantity}`, {
+    const response = fetch(`${path}/wallet?email=${email}&add=${quantity}&withdrawl=${withdrawl}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
+    }).then(() => {
+      window.location.reload();
     });
   } catch (err) {
-    console.error(`There was an error buying the stock: ${err}`);
+    console.error(`There was an error updating the wallet: ${err}`);
   }
 }
-
 
 
 export function buyStock(quantity: number, name: string, costPerStock: number, total: number, symbol: string, email: string, newBalance: number) {

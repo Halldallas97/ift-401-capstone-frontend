@@ -33,7 +33,7 @@ export default function Home() {
                         className="text-white text-4xl font-roboto italic bold"
                         sequence={[
                             `Welcome to StonkTrader.io ${user?.firstName},`,
-                            500,
+                            100,
                             `Welcome to StonkTrader.io ${user?.firstName}, where you buy at the dip and sell at the peak.`,
                             () => {
                                 setIsComplete(true);

@@ -3,7 +3,7 @@
 import { useAuth } from "@/components/auth/authContext";
 import { IsAuthorized } from "@/components/auth/IsAuthorized";
 import { IsNotAuthorized } from "@/components/auth/IsNotAuthorized";
-import { getStock } from "../../components/services/stockService";
+import { getStock, sellStock } from "../../components/services/stockService";
 import Home from "../home";
 import { useState } from "react";
 
@@ -54,19 +54,21 @@ function App() {
                     </button>
                     {isExpanded && (
                         <div className="bg-purple-950 text-white mt-6 p-6 rounded-lg shadow-lg w-full max-w-md">
-                            <h2 className="text-xl font-semibold mb-4">Your Portfolio:</h2>
+                            <h2 className="text-xl font-semibold mb-4">Your Portfolio, click a stock to sell it:</h2>
                             <ul className="space-y-3">
                                 {stockList.stocks.map((stock, index) => (
                                     <li
                                         key={index}
-                                        className="bg-gray-700 p-3 rounded-md shadow-sm flex justify-between"
+                                        className="bg-gray-700 hover:bg-gray-900 p-3 rounded-md shadow-sm flex justify-between"
                                     >
-                                        <span>
-                                            {stock.company} ({stock.sym})
-                                        </span>
-                                        <span>
-                                            ${stock.cost} x {stock.quantity}
-                                        </span>
+                                        <button className="hover:bg-gray-900" onClick={() => sellStock(stock, user?.email)}>
+                                            <span>
+                                                {stock.company} ({stock.sym})
+                                            </span>
+                                            <span>
+                                                ${stock.cost} x {stock.quantity}
+                                            </span>
+                                        </button>
                                     </li>
                                 ))}
                             </ul>
@@ -77,7 +79,7 @@ function App() {
             <IsNotAuthorized>
                 <Home />
             </IsNotAuthorized>
-            
+
         </>
     );
 }

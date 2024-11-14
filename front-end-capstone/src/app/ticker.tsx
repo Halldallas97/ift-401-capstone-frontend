@@ -44,12 +44,6 @@ export default function Ticker() {
   }, [tickers]);
 
   async function getStockData() {
-    const today = new Date();
-    const isoToday = today.toISOString().split('T')[0];
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const isoYesterday = yesterday.toISOString().split('T')[0];
-    
     for (const sym of tickers) {
       try {
         const response = await fetch(
@@ -62,13 +56,13 @@ export default function Ticker() {
             },
           }
         );
-
+        const randomInt = Math.floor(Math.random() * 10) + 1;
         const data = await response.json();
         if (data.results && data.results.length > 0) {
           const stock = {
             name: sym.name,
             symbol: sym.ticker,
-            cost: data.results[0].c,
+            cost: data.results[0].c + randomInt,
           };
           setSymbolObjectsList((prevList) => [...prevList, stock]);
         }

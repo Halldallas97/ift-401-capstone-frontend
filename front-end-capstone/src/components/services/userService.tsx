@@ -18,7 +18,6 @@ export function createUser(email: string, userName: string, firstName: string, l
 
 export async function getWalletBalance(email: string){
     try {
-        console.log(email, "here");
     
         const response = await fetch(`${path}/wallet?email=${email}`, {
           method: "GET",

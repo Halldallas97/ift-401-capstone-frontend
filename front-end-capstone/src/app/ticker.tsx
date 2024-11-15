@@ -13,7 +13,7 @@ export default function Ticker() {
   const [search, setSearch] = useState<string>("");
   const [tickers, setTickers] = useState<{ ticker: string; name: string }[]>([]);
   const [symbolObjectsList, setSymbolObjectsList] = useState<SymbolObject[]>([]);
-  const router = useRouter(); 
+  const router = useRouter();
 
   async function getStocks() {
     try {
@@ -90,17 +90,15 @@ export default function Ticker() {
       <div className="mt-4 text-white">
         <ul>
           {symbolObjectsList.map((obj) => (
-            <button
-              key={obj.symbol} // Key prop moved to the button element
+            <button className="p-2"
+              key={obj.symbol}
               onClick={() => handleBuyClick(obj)}
             >
-              <div className="rounded-lg bg-transparent border border-pink-800 p-2 mb-2">
-                <li className="flex justify-between">
+              <div className="rounded-lg bg-transparent border border-pink-800 p-2 mb-4">
+                <li className="flex justify-between p-2">
                   <div className="flex space-x-8">
                     <span>{obj.symbol}</span>
                     <span>{obj.name}</span>
-                  </div>
-                  <div>
                     <span>{Math.round(obj.cost * 100) / 100}</span>
                   </div>
                 </li>

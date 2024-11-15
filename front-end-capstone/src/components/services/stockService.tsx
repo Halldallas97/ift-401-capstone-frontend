@@ -65,6 +65,8 @@ export function buyStock(quantity: number, name: string, costPerStock: number, t
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(stockBuy),
+    }).then(() => {
+      window.location.reload();
     });
   }
   catch (err) {

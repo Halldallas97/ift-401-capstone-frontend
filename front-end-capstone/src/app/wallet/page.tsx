@@ -48,7 +48,7 @@ export default function Wallet() {
                                     className="p-2 rounded-md bg-yellow-500 hover:bg-green-800"
                                     onClick={() => updateWallet(quantity, user?.email, true)}
                                 >
-                                    withdrawal
+                                    Withdrawal
                                 </button>
                                 <button
                                     className="p-2 rounded-md bg-red-500 hover:bg-red-800"

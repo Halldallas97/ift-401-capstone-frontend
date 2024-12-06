@@ -1,5 +1,6 @@
 "use client";
 
+import { dateCreator } from "@/components/helpers/redirect";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -44,10 +45,12 @@ export default function Ticker() {
   }, [tickers]);
 
   async function getStockData() {
+    const formattedDate = dateCreator(true); 
+    const formattedYesterday = dateCreator(false); 
     for (const sym of tickers) {
       try {
         const response = await fetch(
-          `https://api.polygon.io/v2/aggs/ticker/${sym.ticker}/range/1/day/2023-01-09/2023-02-10?adjusted=true&sort=asc&apiKey=0e7hWppHXfdD0zxhLTAJ45Uy_fpVeX1_`,
+          `https://api.polygon.io/v2/aggs/ticker/${sym.ticker}/range/1/day/${formattedYesterday}/${formattedDate}?adjusted=true&sort=asc&apiKey=0e7hWppHXfdD0zxhLTAJ45Uy_fpVeX1_`,
           {
             method: "GET",
             headers: {
@@ -99,7 +102,7 @@ export default function Ticker() {
                   <div className="flex space-x-8">
                     <span>{obj.symbol}</span>
                     <span>{obj.name}</span>
-                    <span>{Math.round(obj.cost * 100) / 100}</span>
+                    <span>{obj.cost}</span>
                   </div>
                 </li>
               </div>

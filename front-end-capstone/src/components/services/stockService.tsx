@@ -19,7 +19,8 @@ interface Stock {
   volume: number;
 }
 
-export function sellStock(stock: Stock, email: string) {
+export function sellStock(stock: Stock, email: string, stockValue: number) {
+  stock.cost = stockValue; 
   try {
     const response = fetch(`${path}/sell?email=${email}`, {
       method: "PUT",

@@ -6,7 +6,7 @@ import { IsNotAuthorized } from "@/components/auth/IsNotAuthorized";
 import { getStock, sellStock } from "../../components/services/stockService";
 import Home from "../home";
 import { useState } from "react";
-import { dateCreator } from "@/components/helpers/redirect";
+import { dateCreator } from "@/components/helpers/helpers";
 
 interface Stock {
     company: string;
@@ -111,7 +111,7 @@ function App() {
                                         >
                                             <button
                                                 className="hover:bg-gray-900 flex-1 text-left"
-                                                onClick={() => sellStock(stock, user?.email)}
+                                                onClick={() => sellStock(stock, user?.email, currentPrice)}
                                             >
                                                 <div>
                                                     <span className="font-semibold">

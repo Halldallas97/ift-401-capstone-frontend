@@ -29,6 +29,7 @@ export default function Wallet() {
                         <h1 className="text-2xl font-bold mt-4 mb-4">Current Balance: ${user?.wallet}</h1>
                         <div className="p-6 bg-purple-950 rounded-lg shadow-md w-80 mx-auto">
                             <input
+                            aria-label="input for wallet balance"
                                 type="number"
                                 placeholder="Monopoly Money Here"
                                 className="text-black mt-2 p-1 rounded w-full"
@@ -36,22 +37,24 @@ export default function Wallet() {
                             />
                             {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
 
-                            {/* Container to group and format the buttons */}
                             <div className="mt-4 flex flex-col space-y-2">
                                 <button
-                                    className="p-2 rounded-md bg-green-500 hover:bg-green-800"
+                                aria-label="Add to Wallet"
+                                    className="p-2 rounded-md bg-green-800 hover:bg-green-900"
                                     onClick={() => updateWallet(quantity, user?.email, false)}
                                 >
                                     Add to Wallet
                                 </button>
                                 <button
-                                    className="p-2 rounded-md bg-yellow-500 hover:bg-green-800"
+                                aria-label="Withdrawal from wallet"
+                                    className="p-2 rounded-md bg-yellow-800 hover:bg-yellow-900"
                                     onClick={() => updateWallet(quantity, user?.email, true)}
                                 >
                                     Withdrawal
                                 </button>
                                 <button
-                                    className="p-2 rounded-md bg-red-500 hover:bg-red-800"
+                                aria-label="Cancel, leave page"
+                                    className="p-2 rounded-md bg-red-800 hover:bg-red-900"
                                     onClick={returnHome}
                                 >
                                     Cancel

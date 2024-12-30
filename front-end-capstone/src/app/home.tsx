@@ -29,7 +29,7 @@ export default function Home() {
             <IsAuthorized>
                 <div className="p-4">
                     <div className="text-white text-4xl font-roboto italic bold">
-                        Welcome to StonkTrader.io {user?.firstName}, where you buy at the dip and sell at the peak.
+                        Welcome to StonkTrader.io {user?.userName}, where you buy at the dip and sell at the peak.
                     </div>
                     <Ticker />
                 </div>

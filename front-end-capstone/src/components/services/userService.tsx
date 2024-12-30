@@ -1,6 +1,6 @@
 "use client";
 
-const path = "http://localhost:8080/api/server"
+const path = "http://localhost:8080/api/server/user"
 
 export function createUser(email: string, userName: string, firstName: string, lastName: string, password: string) {
     console.log(`Creating user with email: ${email}, password: ${password}, first name: ${firstName}, last name: ${lastName}`);
@@ -8,7 +8,7 @@ export function createUser(email: string, userName: string, firstName: string, l
         const response = fetch(`${path}/trader`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, userName, firstName, lastName, password }),
+            body: JSON.stringify({ email, userName, firstName, lastName, password, wallet: 10000 }),
         });
     }
     catch (err) {
@@ -16,24 +16,7 @@ export function createUser(email: string, userName: string, firstName: string, l
     }
 }
 
-export async function getWalletBalance(email: string){
-    try {
-    
-        const response = await fetch(`${path}/wallet?email=${email}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!response.ok) {
-          throw new Error("Network response failed");
-        }
-        const data = await response.json();    
-        return data; 
-      } catch (err) {
-        console.error(`There was an error fetching the wallet: ${err}`);
-        
-      }
 
-}
 
 export async function checkuser(email: string, pWord: string) {
     console.log(`user name: ${email}, password: ${pWord}`);

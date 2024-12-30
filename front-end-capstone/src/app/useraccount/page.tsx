@@ -43,7 +43,7 @@ function App() {
             setIsExpanded(false);
         } else {
             try {
-                const response = await getStock(user?.email);
+                const response = await getStock(user?.email ?? "");
                 setStockList(response);
 
                 const updatedStockPrices: CurrentStockPrice[] = await Promise.all(
@@ -86,18 +86,19 @@ function App() {
                         Welcome to your portfolio, {user?.userName}
                     </div>
                     <button
-                        className="bg-green-500 hover:bg-green-800 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300"
+                        className="bg-green-800 hover:bg-green-900 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300"
                         onClick={togglePortfolio}
+                        aria-label="show or hide your portfolio toggle button"
                     >
                         {isExpanded ? "Hide Portfolio" : "Show Portfolio"}
                     </button>
                     {isExpanded && (
-                        <div className="bg-purple-950 text-white mt-6 p-6 rounded-lg shadow-lg w-full max-w-md">
+                        <div className="bg-purple-950 text-white mt-6 p-6 rounded-lg shadow-lg w-full max-w-2xl">
                             <h2 className="text-xl font-semibold mb-4">Your Portfolio, click a stock to sell it:</h2>
                             <ul className="space-y-3">
                                 {stockList.stocks.map((stock, index) => {
                                     const currentStock = currentStockPriceList.currentStocks.find(
-                                        (current) => current.sym === stock.sym
+                                        (current) => current?.sym === stock.sym
                                     );
                                     const currentPrice = currentStock?.cost ?? 0;
 
@@ -107,13 +108,14 @@ function App() {
                                     return (
                                         <li
                                             key={index}
-                                            className="bg-gray-700 hover:bg-gray-900 p-3 rounded-md shadow-sm flex justify-between items-center"
+                                            className="bg-gray-700 hover:bg-gray-900 p-4 rounded-md shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0"
                                         >
                                             <button
+                                                aria-label="sell stock by clicking stock"
                                                 className="hover:bg-gray-900 flex-1 text-left"
-                                                onClick={() => sellStock(stock, user?.email, currentPrice)}
+                                                onClick={() => sellStock(stock, user?.email ?? "", currentPrice)}
                                             >
-                                                <div>
+                                                <div className="mb-2">
                                                     <span className="font-semibold">
                                                         {stock.company} ({stock.sym})
                                                     </span>
@@ -122,10 +124,14 @@ function App() {
                                                     Original: ${stock.cost} x {stock.quantity}
                                                 </div>
                                             </button>
-                                            <span className={`font-bold ${priceDifferenceStyle}`}>
-                                                Current: ${currentPrice.toFixed(2)}
-                                            </span>
+
+                                            <div className="sm:ml-4">
+                                                <span className={`font-bold ${priceDifferenceStyle}`}>
+                                                    Current Evaluation: ${(currentPrice * stock.quantity).toFixed(2)}
+                                                </span>
+                                            </div>
                                         </li>
+
                                     );
                                 })}
                             </ul>

@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { getWalletBalance } from "../services/userService"; // Import your function
+import { getWalletBalance } from "../services/stockService"; 
 
 interface User{
     firstName: string; 

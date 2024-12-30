@@ -31,13 +31,13 @@ export default function Buy() {
 
         const total = quantity * cost;
 
-        if (user?.wallet !== undefined && total > user.wallet) {
+        if (user?.wallet !== undefined && total > (user?.wallet ?? 0) ) {
             setErrorMessage("Insufficient balance.");
         } else {
-            const newBalance = user?.wallet - total;
+            const newBalance = user?.wallet ?? 0 - total;
             setErrorMessage(null); 
             try {
-                buyStock(quantity, name, cost, total, symbol, user?.email, newBalance);
+                buyStock(quantity, name ?? "Unknown", cost, total, symbol ?? "Unknown", user?.email ?? "Unknown", newBalance);
                 router.push("/useraccount")
             } catch (error) {
                 setErrorMessage("An error occurred while making the purchase.");

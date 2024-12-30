@@ -28,21 +28,10 @@ export default function Home() {
         <div className="text-center">
             <IsAuthorized>
                 <div className="p-4">
-
-                    <TypeAnimation
-                        className="text-white text-4xl font-roboto italic bold"
-                        sequence={[
-                            `Welcome to StonkTrader.io ${user?.firstName},`,
-                            100,
-                            `Welcome to StonkTrader.io ${user?.firstName}, where you buy at the dip and sell at the peak.`,
-                            () => {
-                                setIsComplete(true);
-                            },
-                        ]}
-                    />
-                    {isComplete && (
-                            <Ticker/>
-                        )}
+                    <div className="text-white text-4xl font-roboto italic bold">
+                        Welcome to StonkTrader.io {user?.userName}, where you buy at the dip and sell at the peak.
+                    </div>
+                    <Ticker />
                 </div>
 
 

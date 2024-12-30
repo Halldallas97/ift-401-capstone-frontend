@@ -1,5 +1,6 @@
 "use client";
 
+import { dateCreator } from "@/components/helpers/helpers";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -16,6 +17,7 @@ export default function Ticker() {
   const router = useRouter();
 
   async function getStocks() {
+    console.log("trying to get stocks")
     try {
       const response = await fetch(
         `https://api.polygon.io/v3/reference/tickers?search=${search}&active=true&limit=10`,
@@ -44,10 +46,12 @@ export default function Ticker() {
   }, [tickers]);
 
   async function getStockData() {
+    const formattedDate = dateCreator(true);
+    const formattedYesterday = dateCreator(false);
     for (const sym of tickers) {
       try {
         const response = await fetch(
-          `https://api.polygon.io/v2/aggs/ticker/${sym.ticker}/range/1/day/2023-01-09/2023-02-10?adjusted=true&sort=asc&apiKey=0e7hWppHXfdD0zxhLTAJ45Uy_fpVeX1_`,
+          `https://api.polygon.io/v2/aggs/ticker/${sym.ticker}/range/1/day/${formattedYesterday}/${formattedDate}?adjusted=true&sort=asc&apiKey=0e7hWppHXfdD0zxhLTAJ45Uy_fpVeX1_`,
           {
             method: "GET",
             headers: {
@@ -56,13 +60,12 @@ export default function Ticker() {
             },
           }
         );
-        const randomInt = Math.floor(Math.random() * 10) + 1;
         const data = await response.json();
         if (data.results && data.results.length > 0) {
           const stock = {
             name: sym.name,
             symbol: sym.ticker,
-            cost: data.results[0].c + randomInt,
+            cost: data.results[0].c,
           };
           setSymbolObjectsList((prevList) => [...prevList, stock]);
         }
@@ -78,15 +81,23 @@ export default function Ticker() {
 
   return (
     <div className="p-4">
-      <input
-        type="text"
-        className="rounded-md p-2 text-black"
-        placeholder="stock symbol"
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button className="p-2 m-2 rounded-md bg-green-500 hover:bg-green-800" onClick={getStocks}>
-        Submit
-      </button>
+      <form 
+        onSubmit={(e) => {
+          e.preventDefault();
+          getStocks();
+        }}>
+
+        <input
+          type="text"
+          className="rounded-md p-2 text-black"
+          placeholder="stock symbol"
+          aria-label="Stocks input box"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button className="p-2 m-2 rounded-md bg-green-800 hover:bg-green-900 text-white" type="submit" aria-label="Submit stocks form">
+          Submit
+        </button>
+
       <div className="mt-4 text-white">
         <ul>
           {symbolObjectsList.map((obj) => (
@@ -99,7 +110,7 @@ export default function Ticker() {
                   <div className="flex space-x-8">
                     <span>{obj.symbol}</span>
                     <span>{obj.name}</span>
-                    <span>{Math.round(obj.cost * 100) / 100}</span>
+                    <span>{obj.cost}</span>
                   </div>
                 </li>
               </div>
@@ -107,6 +118,8 @@ export default function Ticker() {
           ))}
         </ul>
       </div>
+      </form>
+
     </div>
   );
 }
